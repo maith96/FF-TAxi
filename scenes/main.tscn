@@ -1,0 +1,48 @@
+[gd_scene load_steps=4 format=3 uid="uid://chnfj8yp6pjf8"]
+
+[ext_resource type="Script" path="res://scripts/scenes/main.gd" id="1_y5l1u"]
+[ext_resource type="PackedScene" uid="uid://t7t4vhiw01gn" path="res://scenes/taxi.tscn" id="1_ylwmm"]
+[ext_resource type="PackedScene" uid="uid://cqjcr102j6qgh" path="res://scenes/road.tscn" id="2_gd50y"]
+
+[node name="main" type="Node3D"]
+script = ExtResource("1_y5l1u")
+taxi_scene = ExtResource("1_ylwmm")
+population_size = 80
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 43.845, 57.945, -22.67)
+projection = 1
+size = 110.0
+
+[node name="Road" parent="." instance=ExtResource("2_gd50y")]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.00453779, 0.99999, 0, -0.99999, -0.00453779, 0, 15.362, 0)
+shadow_enabled = true
+
+[node name="spawnPosition" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.04312, 0, 1.84002)
+
+[node name="GenerationTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GenerationTimeLeftLabel" type="RichTextLabel" parent="Control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 40.0
+grow_horizontal = 2
+text = "0"
+
+[connection signal="timeout" from="GenerationTimer" to="." method="_on_generation_timer_timeout"]

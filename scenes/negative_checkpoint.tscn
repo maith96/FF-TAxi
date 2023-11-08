@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://c6dma07wp8iwn"]
+
+[ext_resource type="Script" path="res://scenes/negative_checkpoint.gd" id="1_sj02a"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_eilgk"]
+size = Vector3(7, 4, 1)
+
+[node name="negativeCheckpoint" type="Node3D"]
+script = ExtResource("1_sj02a")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.81498, 0, 0)
+shape = SubResource("BoxShape3D_eilgk")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered" flags=18]

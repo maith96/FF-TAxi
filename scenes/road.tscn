@@ -1,0 +1,81 @@
+[gd_scene load_steps=6 format=3 uid="uid://cqjcr102j6qgh"]
+
+[ext_resource type="Script" path="res://scripts/scenes/road.gd" id="1_rxb2r"]
+[ext_resource type="PackedScene" uid="uid://b2kcwgd452h13" path="res://scenes/checkpoint.tscn" id="2_hdaay"]
+[ext_resource type="PackedScene" uid="uid://c6dma07wp8iwn" path="res://scenes/negative_checkpoint.tscn" id="3_24a50"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bpcjj"]
+albedo_color = Color(0.0177324, 0.0177324, 0.0177324, 1)
+uv1_triplanar = true
+uv1_triplanar_sharpness = 4.59479
+texture_filter = 5
+
+[sub_resource type="Curve3D" id="Curve3D_nbjjj"]
+_data = {
+"points": PackedVector3Array(-12.022, 0, -7.85681, 12.022, 0, 7.85681, 0.0108213, 0, 0.0324626, -9.50346, 0, -1.55512, 9.50346, 0, 1.55512, 16.6982, 0, 18.775, -22.9811, 0, 12.0953, 22.9811, 0, -12.0953, 42.0983, 0, -1.09582, -16.3291, 0, -3.20153, 16.3291, 0, 3.20153, 88.4155, 0, 26.7422, 5.82233, 0, 7.38029, -5.82233, 0, -7.38029, 99.881, 0, 5.50349, -0.750626, 0, 18.3344, 0.750626, 0, -18.3344, 80.1389, 0, -24.9323, 7.80223, 0, 18.9115, -7.80223, 0, -18.9115, 105.144, 0, -62.7426, 13.7603, 0, -7.493, -13.7603, 0, 7.493, 65.0366, 0, -82.2922, 3.29037, 0, -12.0646, -3.29037, 0, 12.0646, 54.8408, 0, -57.5249, 6.56602, 0, -7.60277, -6.56602, 0, 7.60277, 37.0874, 0, -39.628, 17.4518, 0, 5.01092, -17.4518, 0, -5.01092, 5.98519, 0, -29.0878, 9.33067, 0, 3.45581, -9.33067, 0, -3.45581, -16.3047, 0, -48.9587, -0.345581, 0, -16.4151, 0.345581, 0, 16.4151, -33.9293, 0, -28.5695, -6.82894, 0, -1.20679, 6.82894, 0, 1.20679, -12.7588, 0, -4.89994, 0, 0, 0, 0, 0, 0, 0.0108213, 0, 0.0324626),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 15
+
+[node name="Road" type="Node3D"]
+script = ExtResource("1_rxb2r")
+checkpoint_scene = ExtResource("2_hdaay")
+negativeCheckpoint_scene = ExtResource("3_24a50")
+
+[node name="road" type="CSGPolygon3D" parent="."]
+use_collision = true
+collision_mask = 3
+polygon = PackedVector2Array(-6, 0, -6, 0, 6, 0, 6, 0)
+mode = 2
+path_node = NodePath("../Path3D")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+material = SubResource("StandardMaterial3D_bpcjj")
+
+[node name="Path3D" type="Path3D" parent="."]
+curve = SubResource("Curve3D_nbjjj")
+
+[node name="PathFollow3D" type="PathFollow3D" parent="Path3D"]
+transform = Transform3D(-0.547067, 0, -0.837088, 0, 1, 0, 0.837088, 0, -0.547067, 0.0108213, 0, 0.0324626)
+
+[node name="wall" type="CSGPolygon3D" parent="."]
+use_collision = true
+collision_mask = 3
+polygon = PackedVector2Array(-6, 0, -6, 2, -6, 2, -6, 0)
+mode = 2
+path_node = NodePath("../Path3D")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+
+[node name="wall2" type="CSGPolygon3D" parent="."]
+use_collision = true
+collision_mask = 3
+polygon = PackedVector2Array(6, 0, 6, 2, 6, 2, 6, 0)
+mode = 2
+path_node = NodePath("../Path3D")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(0.809017, 0, -0.587785, 0, 1, 0, 0.587785, 0, 0.809017, -0.283343, 0.476747, 0.412843)
+use_collision = true
+collision_mask = 3
+size = Vector3(1, 3.1425, 13.1037)
