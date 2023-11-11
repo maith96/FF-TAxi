@@ -11,7 +11,7 @@ func _init(_population_size):
 
 func create_Adams():
 	for i in range(population_size):
-		var layers = FF_Brain.new_layers(7, 4, [1,3])
+		var layers = FF_Brain.new_layers(20, 4, [0,3])
 		var brain = FF_Brain.new(layers)
 		var agent = FF_Agent.new(brain)
 		agents.append(agent)

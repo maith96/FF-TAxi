@@ -48,3 +48,10 @@ static func new_layers(in_nodes,out_nodes, hidden_size:=[0,0]):
 	_layers.append(layer)
 	
 	return _layers
+
+func clone():
+	var _layers = []
+	for l in layers:
+		_layers.append(l.clone())
+	print(_layers)
+	return _layers

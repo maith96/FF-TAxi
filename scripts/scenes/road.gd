@@ -50,7 +50,8 @@ func create_checkpoints():
 			negative_ckpt.points =  i* score
 		add_child(ckpt)
 		if i > 5:
-			add_child(negative_ckpt)
+			#add_child(negative_ckpt)
+			pass
 		score = distance_between_ckpts +i
 		offset = distance_between_ckpts / 2.0
 		

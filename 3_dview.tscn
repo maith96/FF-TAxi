@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://dji6q3w8k4n0s"]
+
+[ext_resource type="Script" path="res://3_dview.gd" id="1_7w3x6"]
+[ext_resource type="PackedScene" uid="uid://cqjcr102j6qgh" path="res://scenes/road.tscn" id="2_7x7nv"]
+[ext_resource type="PackedScene" uid="uid://j3ckjvik485n" path="res://scenes/blind_girl.tscn" id="5_ftc1w"]
+
+[node name="3Dview" type="Node3D"]
+script = ExtResource("1_7w3x6")
+
+[node name="Road" parent="." instance=ExtResource("2_7x7nv")]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 18.2606, -43.2207)
+light_energy = 4.071
+shadow_enabled = true
+
+[node name="BlindGirl" parent="." instance=ExtResource("5_ftc1w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.0806, 1.39053, -52.2518)
+
+[node name="Camera3D2" type="Camera3D" parent="BlindGirl"]
+transform = Transform3D(-0.838404, -0.17745, 0.515354, 0, 0.945519, 0.325568, -0.545049, 0.272957, -0.792727, 9.277, 16.895, -15.0865)

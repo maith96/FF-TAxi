@@ -8,6 +8,9 @@ extends Node3D
 @onready var generationTimer = $GenerationTimer
 @onready var spawn_position = $spawnPosition
 
+var save_path = "user://best.res"
+var best = BestAgent.new()
+
 var taxis: Node3D
 
 var population: FF_Population
@@ -22,6 +25,9 @@ func _ready():
 	generationTimer.start()
 
 func assign_and_spawn_taxis():
+	var best_agent = (population.agents[0])
+	print("bestScore: ",population.agents[0].score)
+	save(best_agent)
 	taxis = Node3D.new()
 	generationTimer.start()
 	for i in range(population_size):
@@ -38,6 +44,10 @@ func end_of_generation():
 	taxis.queue_free()
 	assign_and_spawn_taxis()
 
+func save(_best):
+	best.brain = _best.brain.clone()
+	var res = ResourceSaver.save(best, save_path)
+	assert(res == OK)
 
 func _on_generation_timer_timeout():
 	if generation_time_left <= 0:

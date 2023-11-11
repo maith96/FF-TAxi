@@ -7,7 +7,7 @@
 [node name="main" type="Node3D"]
 script = ExtResource("1_y5l1u")
 taxi_scene = ExtResource("1_ylwmm")
-population_size = 80
+population_size = 50
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 43.845, 57.945, -22.67)
@@ -15,13 +15,14 @@ projection = 1
 size = 110.0
 
 [node name="Road" parent="." instance=ExtResource("2_gd50y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.504883, 0, 0)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -0.00453779, 0.99999, 0, -0.99999, -0.00453779, 0, 15.362, 0)
 shadow_enabled = true
 
 [node name="spawnPosition" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.04312, 0, 1.84002)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.3084, 0, -56.0089)
 
 [node name="GenerationTimer" type="Timer" parent="."]
 one_shot = true

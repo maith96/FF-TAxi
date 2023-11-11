@@ -48,3 +48,6 @@ func mutate_weight(w):
 	if prob < 0.2:
 		w += w*0.02
 	return w
+
+func clone():
+	return [weights.duplicate(true), biases.duplicate(true)]

@@ -4,28 +4,34 @@
 [ext_resource type="PackedScene" uid="uid://b2kcwgd452h13" path="res://scenes/checkpoint.tscn" id="2_hdaay"]
 [ext_resource type="PackedScene" uid="uid://c6dma07wp8iwn" path="res://scenes/negative_checkpoint.tscn" id="3_24a50"]
 
+[sub_resource type="Curve3D" id="Curve3D_8xb2r"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -33.9674, -0.000244141, -60.9099, -10.6857, 0, -3.43034, 10.6857, 0, 3.43034, -15.6515, -0.00012207, -43.8035, -5.84754, 0, 4.17247, 5.84754, 0, -4.17247, 9.74877, -0.000244141, -53.1343, -10.5403, -0.00012207, -7.43002, 10.5403, 0.00012207, 7.43002, 39.7871, -0.000244141, -53.5053, -3.80141, 0, -16.7608, 3.80141, 0, 16.7608, 70.8895, -0.00012207, -42.9651, -4.31977, 0, -16.588, 4.31977, 0, 16.588, 64.669, 0, -9.44356, -14.8327, 0, 5.03643, 14.8327, 0, -5.03643, 104.784, 0, 0.258242, 0, 0, 0, 0, 0, 0, 127.392, -0.00012207, -29.3145),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 8
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bpcjj"]
 albedo_color = Color(0.0177324, 0.0177324, 0.0177324, 1)
 uv1_triplanar = true
 uv1_triplanar_sharpness = 4.59479
 texture_filter = 5
 
-[sub_resource type="Curve3D" id="Curve3D_nbjjj"]
-_data = {
-"points": PackedVector3Array(-12.022, 0, -7.85681, 12.022, 0, 7.85681, 0.0108213, 0, 0.0324626, -9.50346, 0, -1.55512, 9.50346, 0, 1.55512, 16.6982, 0, 18.775, -22.9811, 0, 12.0953, 22.9811, 0, -12.0953, 42.0983, 0, -1.09582, -16.3291, 0, -3.20153, 16.3291, 0, 3.20153, 88.4155, 0, 26.7422, 5.82233, 0, 7.38029, -5.82233, 0, -7.38029, 99.881, 0, 5.50349, -0.750626, 0, 18.3344, 0.750626, 0, -18.3344, 80.1389, 0, -24.9323, 7.80223, 0, 18.9115, -7.80223, 0, -18.9115, 105.144, 0, -62.7426, 13.7603, 0, -7.493, -13.7603, 0, 7.493, 65.0366, 0, -82.2922, 3.29037, 0, -12.0646, -3.29037, 0, 12.0646, 54.8408, 0, -57.5249, 6.56602, 0, -7.60277, -6.56602, 0, 7.60277, 37.0874, 0, -39.628, 17.4518, 0, 5.01092, -17.4518, 0, -5.01092, 5.98519, 0, -29.0878, 9.33067, 0, 3.45581, -9.33067, 0, -3.45581, -16.3047, 0, -48.9587, -0.345581, 0, -16.4151, 0.345581, 0, 16.4151, -33.9293, 0, -28.5695, -6.82894, 0, -1.20679, 6.82894, 0, 1.20679, -12.7588, 0, -4.89994, 0, 0, 0, 0, 0, 0, 0.0108213, 0, 0.0324626),
-"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-}
-point_count = 15
-
 [node name="Road" type="Node3D"]
 script = ExtResource("1_rxb2r")
 checkpoint_scene = ExtResource("2_hdaay")
 negativeCheckpoint_scene = ExtResource("3_24a50")
 
+[node name="Path3D" type="Path3D" parent="."]
+curve = SubResource("Curve3D_8xb2r")
+
+[node name="PathFollow3D" type="PathFollow3D" parent="Path3D"]
+transform = Transform3D(-0.682565, -3.55968e-06, -0.730825, 1.13687e-13, 1, -4.87077e-06, 0.730825, -3.32462e-06, -0.682565, -33.9674, -0.000244141, -60.9099)
+
 [node name="road" type="CSGPolygon3D" parent="."]
 use_collision = true
 collision_mask = 3
-polygon = PackedVector2Array(-6, 0, -6, 0, 6, 0, 6, 0)
+polygon = PackedVector2Array(-10, 0, -10, 0, 10, 0, 10, 0)
 mode = 2
 path_node = NodePath("../Path3D")
 path_interval_type = 0
@@ -38,16 +44,10 @@ path_u_distance = 1.0
 path_joined = false
 material = SubResource("StandardMaterial3D_bpcjj")
 
-[node name="Path3D" type="Path3D" parent="."]
-curve = SubResource("Curve3D_nbjjj")
-
-[node name="PathFollow3D" type="PathFollow3D" parent="Path3D"]
-transform = Transform3D(-0.547067, 0, -0.837088, 0, 1, 0, 0.837088, 0, -0.547067, 0.0108213, 0, 0.0324626)
-
 [node name="wall" type="CSGPolygon3D" parent="."]
 use_collision = true
 collision_mask = 3
-polygon = PackedVector2Array(-6, 0, -6, 2, -6, 2, -6, 0)
+polygon = PackedVector2Array(-10, 0, -10, 2, -10, 2, -10, 0)
 mode = 2
 path_node = NodePath("../Path3D")
 path_interval_type = 0
@@ -62,7 +62,7 @@ path_joined = false
 [node name="wall2" type="CSGPolygon3D" parent="."]
 use_collision = true
 collision_mask = 3
-polygon = PackedVector2Array(6, 0, 6, 2, 6, 2, 6, 0)
+polygon = PackedVector2Array(10, 0, 10, 2, 10, 2, 10, 0)
 mode = 2
 path_node = NodePath("../Path3D")
 path_interval_type = 0
@@ -75,7 +75,56 @@ path_u_distance = 1.0
 path_joined = false
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
-transform = Transform3D(0.809017, 0, -0.587785, 0, 1, 0, 0.587785, 0, 0.809017, -0.283343, 0.476747, 0.412843)
+transform = Transform3D(0.511728, 0, -0.859147, 0, 1, 0, 0.859147, 0, 0.511728, -33.8014, 0.476747, -60.2037)
 use_collision = true
 collision_mask = 3
-size = Vector3(1, 3.1425, 13.1037)
+size = Vector3(1, 3.1425, 22.6431)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="."]
+transform = Transform3D(-0.302885, 0, -0.953027, 0, 1, 0, 0.953027, 0, -0.302885, 127.518, 0.476747, -27.5496)
+use_collision = true
+collision_mask = 3
+size = Vector3(1, 3.1425, 22.6431)
+
+[node name="obstacles" type="Node" parent="."]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="obstacles"]
+transform = Transform3D(0.5, 0.866025, 3.78552e-08, 0, -4.37114e-08, 1, 0.866025, -0.5, -2.18557e-08, 8, 0, -52)
+visible = false
+use_collision = true
+size = Vector3(4, 6, 6.79)
+
+[node name="CSGBox3D8" type="CSGBox3D" parent="obstacles"]
+transform = Transform3D(0.999891, 0.0147651, 6.45379e-10, -2.168e-15, -4.37114e-08, 1, 0.0147651, -0.999891, -4.37066e-08, 29.2951, 0, -51.0736)
+use_collision = true
+size = Vector3(4, 12.4569, 6.79)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="obstacles"]
+transform = Transform3D(0.962361, -0.271776, -1.18797e-08, -8.41985e-16, -4.37114e-08, 1, -0.271776, -0.962361, -4.20661e-08, 5.54318, 0, -56.8223)
+use_collision = true
+size = Vector3(4, 10.0922, 6.79)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="obstacles"]
+transform = Transform3D(0.899237, 0.437461, 1.9122e-08, 0, -4.37114e-08, 1, 0.437461, -0.899237, -3.93069e-08, 46.9959, 0, -58.4727)
+use_collision = true
+size = Vector3(4, 6.84383, 6.79)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="obstacles"]
+transform = Transform3D(-0.99181, 0.127723, 5.58287e-09, 0, -4.37114e-08, 1, 0.127723, 0.99181, 4.33534e-08, 69.2688, 0, -50.1652)
+use_collision = true
+size = Vector3(3.43745, 10.0922, 6.79)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="obstacles"]
+transform = Transform3D(0.00961655, 0.999954, 4.37094e-08, 8.35754e-16, -4.37114e-08, 1, 0.999954, -0.00961655, -4.2036e-10, 71.791, 0, -24.6575)
+use_collision = true
+size = Vector3(10, 6.75493, 6.79)
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="obstacles"]
+transform = Transform3D(0.169934, -0.985456, -4.30756e-08, 8.63508e-16, -4.37114e-08, 1, -0.985456, -0.169934, -7.42806e-09, 67.7865, 0, 3.98055)
+use_collision = true
+size = Vector3(3.43745, 12.3845, 6.79)
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="obstacles"]
+transform = Transform3D(0.290308, 0.826116, -0.482963, 0.0189323, 0.499641, 0.866025, 0.956746, -0.260558, 0.12941, 88.6157, 0, -2.4968)
+use_collision = true
+size = Vector3(3.43745, 12.3845, 6.79)

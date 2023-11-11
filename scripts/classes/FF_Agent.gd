@@ -20,3 +20,8 @@ func make_child(par2: FF_Agent):
 	
 	child = FF_Agent.new(FF_Brain.new(child_layers))
 	return child
+
+func save():
+	return {
+		'brain': brain
+	}

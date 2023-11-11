@@ -2,7 +2,7 @@ extends VehicleBody3D
 
 var accel = 1000
 
-var angle_between_rays = deg_to_rad(36)
+var angle_between_rays = deg_to_rad(10)
 var angle_cone_of_vision = deg_to_rad(180)
 var max_view_distance = 20
 var rays = []
@@ -15,7 +15,7 @@ var accel_up = 0.0
 var accel_down = 0.0
 var accel_axis = 1.0
 var max_rpm = 360
-var max_torque = 300
+var max_torque = 200
 
 var agent:FF_Agent
 var passed_checkpoints = []
@@ -54,12 +54,15 @@ func set_action_values(brain_response):
 	turn_right = brain_out[1]
 	accel_up = brain_out[2]
 	accel_down = brain_out[3]
+
 	
 	if accel_up > accel_down: accel_axis = 1.0 
 	else: accel_axis = -1.0
 	#accel_axis = accel_up-accel_down
 	if accel_up == 0.0 and accel_down == 0.0:
 		accel_axis = 0
+	
+	accel_axis = clamp(accel_up - accel_down, -1, 1)
 	
 func get_sensory_info():
 	var sensory_info = get_ray_distances()
@@ -96,6 +99,7 @@ func set_engine_froce(wheel:VehicleWheel3D, accel_axis):
 
 func create_raycasts():
 	var ray_count = int(angle_cone_of_vision / angle_between_rays)
+
 	for i in range(ray_count):
 		var ray = RayCast3D.new()
 		var angle  = angle_between_rays * (i - ray_count / 2)
