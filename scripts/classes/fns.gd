@@ -73,3 +73,13 @@ static func probabilities(arr:Array):
 	var total = arr.reduce(func(accum, n): return accum + n)
 	var probabilities = arr.map(func(score): return score / total)
 	return probabilities
+
+static func relu(arr:Array):
+	var new_arr = []
+	for r in arr:
+		var new_row = []
+		for c in r:
+			var new_v = 0 if c < 0 else c
+			new_row.append(new_v)
+		new_arr.append(new_row)
+	return new_arr

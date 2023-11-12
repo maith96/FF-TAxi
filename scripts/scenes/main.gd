@@ -9,7 +9,11 @@ extends Node3D
 @onready var spawn_position = $spawnPosition
 
 var save_path = "user://best.res"
+var gen_agents_save_path = "user://gen_agents.res"
+
 var best = BestAgent.new()
+var generationAgents = GenAgents.new()
+
 
 var taxis: Node3D
 
@@ -40,6 +44,7 @@ func assign_and_spawn_taxis():
 	add_child(taxis)
 		
 func end_of_generation():
+	save_gen_agents()
 	population.create_next_generation()
 	taxis.queue_free()
 	assign_and_spawn_taxis()
@@ -49,9 +54,19 @@ func save(_best):
 	var res = ResourceSaver.save(best, save_path)
 	assert(res == OK)
 
+func save_gen_agents():
+	if len(generationAgents.brains) < 0:
+		generationAgents.brains = []
+	
+	for agent in population.agents:
+		generationAgents.brains.append(agent.brain.clone())
+		var res = ResourceSaver.save(generationAgents, gen_agents_save_path)
+		assert(res == OK)
+		
+
 func _on_generation_timer_timeout():
 	if generation_time_left <= 0:
-		generation_life_expectancy += 3
+		generation_life_expectancy += 1
 		generation_time_left = generation_life_expectancy
 		end_of_generation()
 	else:

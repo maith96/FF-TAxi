@@ -4,6 +4,7 @@ class_name FF_Population
 
 var population_size: int
 var agents: Array
+var gen_agents_save_path = "user://gen_agents.res"
 
 func _init(_population_size):
 	population_size = _population_size
@@ -11,7 +12,7 @@ func _init(_population_size):
 
 func create_Adams():
 	for i in range(population_size):
-		var layers = FF_Brain.new_layers(20, 4, [0,3])
+		var layers = FF_Brain.new_layers(20, 4, [1,10])
 		var brain = FF_Brain.new(layers)
 		var agent = FF_Agent.new(brain)
 		agents.append(agent)
@@ -59,4 +60,28 @@ func get_agent_scores():
 		scores.append(a.score)
 	return scores
 
+func load_gen_agents():
+	if ResourceLoader.exists(gen_agents_save_path):
+		var gen_agents = ResourceLoader.load(gen_agents_save_path)
+		return gen_agents
+	return null
 
+func create_gen_agents_from_load(brains):
+	agents = []
+	for b in brains:
+		var layers = create_layers(b)
+		var brain = create_brain(layers)
+		var agent = create_agent(brain)
+		agents.append(agent)
+
+func create_layers(layers_arr):
+	var layers = []
+	for l in layers_arr:
+		layers.append(FF_Layer.new(l[0], l[1]))
+	return layers
+
+func create_brain(layers):
+	return FF_Brain.new(layers)
+
+func create_agent(brain):
+	return FF_Agent.new(brain)
